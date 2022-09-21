@@ -216,15 +216,21 @@ class yolov5():
 
 
 def findPipes(onnx_path, img_path, save_img=True):
-    basedir = os.path.dirname(__file__)
+    # basedir = os.path.dirname(__file__)
+    # 如果主接口没有传模型路径，此处使用默认模型路径
     if onnx_path == '':
         onnx_path = 'pipeCount/static/weights/best.onnx'
+    # save_img = ture时，识别结果图片保存到save_path路径
     save_path = 'pipeCount/static/output/'
-    model = yolov5(onnx_path)
     if not os.path.exists(save_path):
         os.mkdir(save_path)
+    # 初始化yolov5模型
+    model = yolov5(onnx_path)
+    # opencv读取图片
     srcimg = cv2.imread(img_path)
+    # 获取图片宽、高、通道
     height, width, ch = srcimg.shape
+    # opencv推演主函数
     srcimg, result_arr = model.detect(srcimg, save_img)
     if save_img:
         cv2.imwrite(save_path + os.path.basename(img_path), srcimg)

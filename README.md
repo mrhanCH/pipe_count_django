@@ -5,6 +5,8 @@
 
 onnx模型由YOLOV5_P6进行训练，当前模型所使用训练集图片均为不同环境下的钢管横截面照片，由于训练集有限，当前模型mAP大约为0.5-0.6。
 
+前端项目：[钢管计数-uniapp](https://gitee.com/atvip/pipe_count_uniapp)
+
 
 #### 软件架构
 Python 3.8.6
@@ -39,19 +41,28 @@ pip install opencv-python==4.5.2.52 opencv-contrib-python==4.5.2.52
 
 **本地运行：**
 
-1、  Pycharm终端中输入命令
+1、  Pycharm终端中输入命令启动django服务
 ```
 python manage.py runserver
 ```
-2、  在浏览器中输入地址打开链接
+2、  复制以下链接
 ```
-127.0.0.1:8000/finds/
+http://127.0.0.1:8000/
 ``` 
-3、  或点击终端中的地址打开链接
-
 ![image](doc/run.jpg)
 
+3、  粘贴链接到前端替换（根据自己django部署方案链接可能有所不同）
 
+注意API接口，目前开放两个接口，对应下方截图前端两个位置
+
+```
+http://www.xxx.com/finds   --->   钢管识别接口
+http://www.xxx.com/save    --->   保存结果接口
+``` 
+
+![image](doc/uniapp.jpg)
+
+![image](doc/uniapp2.jpg)
 
 #### 参与贡献
 

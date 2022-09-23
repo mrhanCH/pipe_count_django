@@ -1,14 +1,11 @@
-from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from pipeCount.pipe import findPipes
 
-import sys, os, time, json
-
-# Basedir = os.path.dirname(__file__)  # 获取当前路径的上一级 极为s1
+import os, json
 
 
 # 主要API接口
-def index(request):
+def findPipe(request):
     # 获取前端上传的图片
     image = request.FILES['image']
     if image is None:
@@ -19,10 +16,36 @@ def index(request):
     # findPipes参数（onnx模型地址-默认为空使用自带模型，识别图片地址，是否保存识别结果）
     width, height, result_arr = findPipes('', local_image, True)
     # 回调json格式
-    data = {'recognitionCount': len(result_arr), 'width': width,
-            'height': height, 'picRecognizeds': result_arr}
+    data = {'resultCount': len(result_arr), 'width': width,
+            'height': height, 'picResult': result_arr, 'name': str(image)[:-4]}
     response = {'code': 200, 'msg': '查询成功', 'data': data}
     return HttpResponse(json.dumps(response))
+
+
+# 保存结果生成YOLOV5格式数据集文件
+def saveResult(request):
+    if request.method == 'POST':
+        parames = json.loads(request.body.decode("utf-8"))
+        allport = parames['allPort']
+        name = parames['name']
+        pWidth = parames['pWidth']
+        pHeight = parames['pHeight']
+        if name != '':
+            # 文件名与前端上传的图片名称保持一致
+            txt = 'pipeCount/static/output/' + str(name) + '.txt'
+            Note = open(txt, mode='w', encoding='utf-8')
+            for item in allport:
+                # 转换格式
+                box = convert((pWidth, pHeight), item)
+                # 写入txt，共5个字段
+                Note.write("%s %s %s %s %s\n" % (
+                    0, box[0], box[1], box[2], box[3]))
+            Note.close()
+        # 回调json格式
+        response = {'code': 200, 'msg': '保存成功'}
+        return HttpResponse(json.dumps(response))
+    else:
+        return HttpResponse(json.dumps({'code': 100, 'msg': '非法请求'}))
 
 
 # 保存客户端上传图片到本地
@@ -32,3 +55,23 @@ def saveImage(image, filename):
             f.write(image.read())
             f.closed
     return filename
+
+
+def convert(size, box):
+    '''
+    size: 图片的宽和高(w,h)
+    box格式: x,y,w,h
+    返回值：x_center/image_width y_center/image_height width/image_width height/image_height
+    '''
+    dw = 1. / float(size[0])
+    dh = 1. / float(size[1])
+    x = float(box['leftTop']['xaxis'] + (box['rightDown']['xaxis'] - box['leftTop']['xaxis'])) / 2.0
+    y = float(box['leftTop']['yaxis'] + (box['rightDown']['yaxis'] - box['leftTop']['yaxis'])) / 2.0
+    w = float(box['rightDown']['xaxis'] - box['leftTop']['xaxis'])
+    h = float(box['rightDown']['yaxis'] - box['leftTop']['yaxis'])
+
+    x = x * dw
+    w = w * dw
+    y = y * dh
+    h = h * dh
+    return (x, y, w, h)

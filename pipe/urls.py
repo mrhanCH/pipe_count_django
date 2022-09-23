@@ -19,5 +19,6 @@ from pipeCount import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path(r'index/', views.index),
+    path(r'finds/', views.findPipe),
+    path(r'save/', views.saveResult),
 ]

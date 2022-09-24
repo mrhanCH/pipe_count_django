@@ -1,5 +1,7 @@
 # 钢管计数-django
 
+![输入图片说明](doc/10.jpg) ![输入图片说明](doc/11.jpg)
+
 #### 介绍
 钢管计数DJANGO后端版本，使用django框架进行开发。
 
@@ -8,6 +10,10 @@
 前端采用uniapp框架进行开发，该项目需配合作者的前端项目搭配使用，或您自己搭建其他前端，开放接口请看下方简介。
 
 onnx模型由YOLOV5_P6进行训练，当前模型所使用训练集图片均为不同环境下的钢管横截面照片，由于训练集有限，当前模型mAP大约为0.5-0.6。
+
+感谢禾路老师全程专业指导！
+
+[专注图像处理-jsxyhelu](https://www.cnblogs.com/jsxyhelu)
 
 前端项目：[钢管计数-uniapp](https://gitee.com/atvip/pipe_count_uniapp)
 

@@ -12,7 +12,6 @@ def findPipe(request):
     if image is None:
         return HttpResponse(json.dumps({'code': 100, 'msg': '请上传图片'}))
     # 保存图片到本地
-    print(str(image))
     local_image = saveImage(image, 'pipeCount/static/image/' + str(image))
     # YOLOV5_P6训练模型，回调:原始图片宽，高，[左上坐标，右下坐标，中心点坐标，范围参数]
     # findPipes参数（onnx模型地址-默认为空使用自带模型，识别图片地址，是否保存识别结果）

@@ -19,6 +19,8 @@ onnx模型由YOLOV5_P6进行训练，当前模型所使用训练集图片均为�
 
 **PS: 该项目仅可做为学习研究所用，未经作者许可，不得用于商业用途！**
 
+![image](doc/shiyongshuoming.gif)
+
 
 #### 软件架构
 Python 3.8.6

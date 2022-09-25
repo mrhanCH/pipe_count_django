@@ -8,15 +8,17 @@ import os, json
 def findPipe(request):
     # 获取前端上传的图片
     image = request.FILES['image']
+    host = request.scheme + '://' + request.get_host()
     if image is None:
         return HttpResponse(json.dumps({'code': 100, 'msg': '请上传图片'}))
     # 保存图片到本地
+    print(str(image))
     local_image = saveImage(image, 'pipeCount/static/image/' + str(image))
     # YOLOV5_P6训练模型，回调:原始图片宽，高，[左上坐标，右下坐标，中心点坐标，范围参数]
     # findPipes参数（onnx模型地址-默认为空使用自带模型，识别图片地址，是否保存识别结果）
     width, height, result_arr = findPipes('', local_image, True)
     # 回调json格式
-    data = {'resultCount': len(result_arr), 'width': width,
+    data = {'resultCount': len(result_arr), 'picurl': local_image.replace('pipeCount', host), 'width': width,
             'height': height, 'picResult': result_arr, 'name': str(image)[:-4]}
     response = {'code': 200, 'msg': '查询成功', 'data': data}
     return HttpResponse(json.dumps(response))
@@ -65,8 +67,8 @@ def convert(size, box):
     '''
     dw = 1. / float(size[0])
     dh = 1. / float(size[1])
-    x = float(box['leftTop']['xaxis'] + (box['rightDown']['xaxis'] - box['leftTop']['xaxis'])) / 2.0
-    y = float(box['leftTop']['yaxis'] + (box['rightDown']['yaxis'] - box['leftTop']['yaxis'])) / 2.0
+    x = float(box['leftTop']['xaxis'] + float(box['rightDown']['xaxis'] - box['leftTop']['xaxis']) / 2.0)
+    y = float(box['leftTop']['yaxis'] + float(box['rightDown']['yaxis'] - box['leftTop']['yaxis']) / 2.0)
     w = float(box['rightDown']['xaxis'] - box['leftTop']['xaxis'])
     h = float(box['rightDown']['yaxis'] - box['leftTop']['yaxis'])
 

@@ -1,5 +1,7 @@
 # 钢管计数-django
 
+![输入图片说明](doc/10.jpg) ![输入图片说明](doc/11.jpg)
+
 #### 介绍
 钢管计数DJANGO后端版本，使用django框架进行开发。
 
@@ -8,6 +10,10 @@
 前端采用uniapp框架进行开发，该项目需配合作者的前端项目搭配使用，或您自己搭建其他前端，开放接口请看下方简介。
 
 onnx模型由YOLOV5_P6进行训练，当前模型所使用训练集图片均为不同环境下的钢管横截面照片，由于训练集有限，当前模型mAP大约为0.5-0.6。
+
+感谢禾路老师全程专业指导！
+
+[专注图像处理-jsxyhelu](https://www.cnblogs.com/jsxyhelu)
 
 前端项目：[钢管计数-uniapp](https://gitee.com/atvip/pipe_count_uniapp)
 
@@ -29,13 +35,11 @@ opencv-contrib-python 4.5.2.52
 
 **Pycharm 中进行安装：**
 
-1、  在pycharm中新建项目，选择Django，参数参考图片，根据个人pycharm配置不同参数也不同。
+1、  在pycharm中新建项目，选择Python，参数根据个人pycharm配置不同，参数也不同。
 
-![image](doc/createDjango.jpg)
-
-2、  使用pycharm终端安装opencv-python
+2、  使用pycharm终端安装django和opencv-python
 ```
-pip install opencv-python==4.5.2.52 opencv-contrib-python==4.5.2.52
+pip install django==3.2.15 opencv-python==4.5.2.52 opencv-contrib-python==4.5.2.52
 ```
 
    安装完可使用“pip list”命令查看已安装的包。请确保红框内的包都正常安装！

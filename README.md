@@ -3,6 +3,7 @@
 ![输入图片说明](doc/10.jpg) ![输入图片说明](doc/11.jpg)
 
 ![输入图片说明](doc/zhengshu.png)
+
 ### 恭喜该项目荣获国际性OpenCV 2022竞赛团队奖第二名！！！
 ### 项目组成员：禾老师+作者本人(AndyNet&&GreenOpen)
 

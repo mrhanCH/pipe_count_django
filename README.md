@@ -1,5 +1,7 @@
 # 钢管计数-django
 
+[README](README.md) | [English Doc](README_En.md)
+
 ![输入图片说明](doc/10.jpg) ![输入图片说明](doc/11.jpg)
 
 ![输入图片说明](doc/zhengshu.png)
